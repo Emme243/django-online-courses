@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "compressor",
     "apps.courses",
+    "apps.dashboard",
 ]
 
 MIDDLEWARE = [

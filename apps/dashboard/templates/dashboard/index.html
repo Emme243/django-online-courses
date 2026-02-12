@@ -1,0 +1,27 @@
+{% extends '_base.html' %} 
+{% block title %} Dashboard {% endblock title %} 
+{% block content %} 
+{% include 'includes/navbar.html' %}
+<main class="container px-4 mx-auto my-12">
+  <h2 class="text-5xl font-bold text-heading">Hello Emmanuel!</h2>
+  <section class="content">
+    <div class="cards">
+      <a href="">
+        <div class="card">
+          <h3>Continuar viendo</h3>
+        </div>
+      </a>
+      <a href="">
+        <div class="card">
+          <h3>Cursos</h3>
+        </div>
+      </a>
+      <a href="">
+        <div class="card">
+          <h3>Perfil</h3>
+        </div>
+      </a>
+    </div>
+  </section>
+</main>
+{% endblock content %}
