@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "compressor",
     "apps.courses",
     "apps.dashboard",
+    "apps.profiles",
 ]
 
 MIDDLEWARE = [
