@@ -1,0 +1,241 @@
+{% extends '_base.html' %} 
+{% load static %} 
+{% block title %}Course Detail{% endblock title %} 
+{% block content %}
+
+<nav class="bg-neutral-secondary-soft w-full border-b border-default">
+  <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+    <div class="w-full md:w-auto" id="navbar-solid">
+      <ul
+        class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-default rounded-base bg-neutral-secondary-soft md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-neutral-secondary-soft"
+      >
+        <li>
+          <a
+            href="{% url 'course_detail' %}"
+            class="flex items-center space-x-3 rtl:space-x-reverse text-heading md:hover:text-fg-brand"
+          >
+            <svg
+              class="w-6 h-6"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5 12h14M5 12l4-4m-4 4 4 4"
+              />
+            </svg>
+
+            <span
+              class="block py-2 px-3 rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:p-0 md:dark:hover:bg-transparent"
+            >
+              Back to control panel
+            </span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <a href="{% url 'course_list' %}" class="flex items-center space-x-3 rtl:space-x-reverse">
+      <img src="{% static 'images/devilearn.png' %}" class="h-7" alt="Devilearn Logo" />
+    </a>
+  </div>
+</nav>
+<main class="container px-4 mx-auto my-12">
+  <div class="flex flex-col gap-4 md:flex-row md:gap-6">
+    <div class="md:min-w-md">
+      <h4 class="text-2xl font-bold text-heading">{{lesson.title}}</h4>
+
+      <div class="flex justify-between mb-1 mt-3">
+        <span class="text-sm font-medium text-body">Progress</span>
+        <span class="text-sm font-medium text-body">{{lesson.progress}}%</span>
+      </div>
+      <div class="w-full bg-neutral-quaternary rounded-full h-2">
+        <div class="bg-brand h-2 rounded-full" style="width: {{lesson.progress}}%"></div>
+      </div>
+
+      <form class="flex items-center mx-auto space-x-2 mt-6">
+        <label for="simple-search" class="sr-only">Search</label>
+        <div class="relative w-full">
+          <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+            <svg
+              class="size-4"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M10 3v4a1 1 0 0 1-1 1H5m8 7.5 2.5 2.5M19 4v16a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7.914a1 1 0 0 1 .293-.707l3.914-3.914A1 1 0 0 1 9.914 3H18a1 1 0 0 1 1 1Zm-5 9.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z"
+              />
+            </svg>
+          </div>
+          <input
+            type="text"
+            id="simple-search"
+            class="px-3 py-2.5 bg-neutral-secondary-medium border border-default-medium rounded-base ps-9 text-heading text-sm focus:ring-brand focus:border-brand block w-full placeholder:text-body"
+            placeholder="Search branch name..."
+            required
+          />
+        </div>
+        <button
+          type="submit"
+          class="inline-flex items-center justify-center shrink-0 text-white bg-brand hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs rounded-base w-10 h-10 focus:outline-none"
+        >
+          <svg
+            class="w-5 h-5"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-width="2"
+              d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"
+            />
+          </svg>
+          <span class="sr-only">Icon description</span>
+        </button>
+      </form>
+
+      <div
+        id="accordion-collapse"
+        data-accordion="collapse"
+        class="rounded-base border border-default overflow-hidden shadow-xs mt-6"
+      >
+        {% for section in lesson.content %} 
+        {% with section_id='accordion-collapse-'|add:section.id|stringformat:"s" %}
+        <h2 id="{{ section_id }}-heading">
+          <button
+            type="button"
+            class="flex items-center justify-start w-full p-5 font-medium rtl:text-right text-body rounded-t-base border border-t-0 border-x-0 border-b-default hover:text-heading hover:bg-neutral-secondary-medium gap-3"
+            data-accordion-target="#{{ section_id }}-body"
+            aria-expanded="true"
+            aria-controls="{{ section_id }}-body"
+          >
+            <span class="mr-auto">Section {{section.id}}: {{section.name}}</span>
+            <span class="text-body">{{section.complete_lessons}} / {{section.total_lessons}}</span>
+            <svg
+              data-accordion-icon
+              class="w-5 h-5 rotate-180 shrink-0"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m5 15 7-7 7 7"
+              />
+            </svg>
+          </button>
+        </h2>
+        <div
+          id="{{ section_id }}-body"
+          class="hidden border border-s-0 border-e-0 border-t-0 border-b-default"
+          aria-labelledby="{{ section_id }}-heading"
+        >
+          <div class="p-4 md:p-5 text-body">
+            <ul class="max-w-md space-y-1 text-body list-disc list-inside">
+              {% for lesson in section.lessons %}
+              <li class="flex items-center space-x-3 rtl:space-x-reverse">
+                {% if lesson.type == 'video' %}
+                <svg
+                  class="size-4"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M14 6H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1Zm7 11-6-2V9l6-2v10Z"
+                  />
+                </svg>
+                {% else %}
+                <svg
+                  class="size-4"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M10 3v4a1 1 0 0 1-1 1H5m14-4v16a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7.914a1 1 0 0 1 .293-.707l3.914-3.914A1 1 0 0 1 9.914 3H18a1 1 0 0 1 1 1Z"
+                  />
+                </svg>
+                {% endif %}
+                <span>{{lesson.name}}</span>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+        {% endwith %} 
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="grow flex flex-col justify-start items-end">
+      <video class="w-full rounded-base aspect-video" controls>
+        <source src="/docs/videos/flowbite.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+
+      <button
+        type="button"
+        class="inline-flex items-center text-white bg-brand hover:bg-brand-strong box-border border border-transparent focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none mt-6"
+      >
+        <span>Complete and continue</span>
+        <svg
+          class="w-4 h-4 ms-1.5 -me-0.5"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M19 12H5m14 0-4 4m4-4-4-4"
+          />
+        </svg>
+      </button>
+    </div>
+  </div>
+</main>
+{% endblock content %}

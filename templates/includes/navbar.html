@@ -1,0 +1,74 @@
+{% load static %}
+
+<header class="w-full">
+  <nav class="bg-neutral-primary">
+    <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl p-4">
+      <a href="{% url 'course_list' %}" class="flex items-center space-x-3 rtl:space-x-reverse">
+        <img src="{% static 'images/devilearn.png' %}" class="h-7" alt="Devilearn Logo" />
+      </a>
+      <div class="flex items-center space-x-6 rtl:space-x-reverse">
+        <div class="relative">
+          <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+            <svg
+              class="w-4 h-4 text-body"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-width="2"
+                d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"
+              />
+            </svg>
+          </div>
+          <input
+            type="text"
+            id="input-group-1"
+            class="block w-full ps-9 pe-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand px-2.5 py-2 shadow-xs placeholder:text-body"
+            placeholder="Search"
+          />
+        </div>
+        <button
+          type="button"
+          class="flex text-sm bg-neutral-primary rounded-full md:me-0 focus:ring-4 focus:ring-neutral-tertiary"
+          id="user-menu-button"
+          aria-expanded="false"
+          data-dropdown-toggle="user-dropdown"
+          data-dropdown-placement="bottom"
+        >
+          <span class="sr-only">Open user menu</span>
+          <img
+            class="w-8 h-8 rounded-full"
+            src="https://randomuser.me/api/portraits/men/42.jpg"
+            alt="user photo"
+          />
+        </button>
+      </div>
+    </div>
+  </nav>
+  <nav class="bg-neutral-secondary-soft border-y border-default">
+    <div class="max-w-screen-xl px-4 py-3 mx-auto">
+      <div class="flex items-center">
+        <ul class="flex flex-row font-medium mt-0 space-x-8 rtl:space-x-reverse text-sm">
+          <li>
+            <a href="#" class="text-heading hover:underline" aria-current="page">Dashboard</a>
+          </li>
+          <li>
+            <a href="{% url 'course_list' %}" class="text-heading hover:underline">Courses</a>
+          </li>
+          <li>
+            <a href="#" class="text-heading hover:underline">Support</a>
+          </li>
+          <li>
+            <a href="#" class="text-heading hover:underline">Settings</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>

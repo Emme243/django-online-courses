@@ -1,0 +1,202 @@
+{% extends "_base.html" %} 
+{% load static %} 
+{% block title %} Course Detail {% endblock title %} 
+{% block content %} 
+{% include 'includes/navbar.html' %}
+<main class="container px-4 mx-auto my-12">
+  <div class="flex flex-col sm:flex-row gap-8">
+    <div class="grow">
+      <h2 class="text-4xl font-bold text-heading">Course Content</h2>
+      <div
+        id="accordion-collapse"
+        data-accordion="collapse"
+        class="rounded-base border border-default overflow-hidden shadow-xs mt-6"
+      >
+        {% for section in course.content %}
+        {% with section_id='accordion-collapse-'|add:section.id|stringformat:"s" %}
+        <h2 id="{{ section_id }}-heading">
+          <button
+            type="button"
+            class="flex items-center justify-between w-full p-5 font-medium rtl:text-right text-body rounded-t-base border border-t-0 border-x-0 border-b-default hover:text-heading hover:bg-neutral-secondary-medium gap-3"
+            data-accordion-target="#{{ section_id }}-body"
+            aria-expanded="true"
+            aria-controls="{{ section_id }}-body"
+          >
+            <span>Section {{section.id}}: {{section.name}}</span>
+            <svg
+              data-accordion-icon
+              class="w-5 h-5 rotate-180 shrink-0"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m5 15 7-7 7 7"
+              />
+            </svg>
+          </button>
+        </h2>
+        <div
+          id="{{ section_id }}-body"
+          class="hidden border border-s-0 border-e-0 border-t-0 border-b-default"
+          aria-labelledby="{{ section_id }}-heading"
+        >
+          <div class="p-4 md:p-5 text-body">
+            <ul class="max-w-md space-y-1 text-body list-disc list-inside">
+              {% for lesson in section.lessons %}
+              <li class="flex items-center space-x-3 rtl:space-x-reverse">
+                {% if lesson.type == 'video' %}
+                <svg
+                  class="size-4"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M14 6H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1Zm7 11-6-2V9l6-2v10Z"
+                  />
+                </svg>
+                {% else %}
+                <svg
+                  class="size-4"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M10 3v4a1 1 0 0 1-1 1H5m14-4v16a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7.914a1 1 0 0 1 .293-.707l3.914-3.914A1 1 0 0 1 9.914 3H18a1 1 0 0 1 1 1Z"
+                  />
+                </svg>
+                {% endif %}
+                <span>{{lesson.name}}</span>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+        {% endwith %}
+        {% endfor %}
+      </div>
+    </div>
+
+    <div
+      class="bg-neutral-primary-soft block w-full sm:max-w-sm p-6 border border-default rounded-base shadow-xs relative"
+    >
+      <img class="rounded-full size-10 absolute" src="{{course.info.instructor_image}}" alt="">
+      <img class="rounded-base" src="{% static course.image %}" alt="" />
+      <h5 class="mt-6 mb-2 text-2xl font-semibold tracking-tight text-heading">{{course.title}}</h5>
+      <p class="mb-6 text-body">
+        In today’s fast-paced digital landscape, fostering seamless collaboration among Developers
+        and IT Operations.
+      </p>
+      <div class="mb-6">
+        <h2 class="mb-2 text-lg font-medium text-heading">About this course</h2>
+        <ul class="max-w-md space-y-1 text-body list-disc list-inside">
+          <li class="flex items-center space-x-3 rtl:space-x-reverse">
+            <svg
+              class="size-4"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M10 3v4a1 1 0 0 1-1 1H5m14-4v16a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7.914a1 1 0 0 1 .293-.707l3.914-3.914A1 1 0 0 1 9.914 3H18a1 1 0 0 1 1 1Z"
+              />
+            </svg>
+            <span>{{course.info.lessons}} lessons</span>
+          </li>
+          <li class="flex items-center space-x-3 rtl:space-x-reverse">
+            <svg
+              class="size-4"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M14 6H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1Zm7 11-6-2V9l6-2v10Z"
+              />
+            </svg>
+            <span>{{course.info.duration}} video hours</span>
+          </li>
+          <li class="flex items-center space-x-3 rtl:space-x-reverse">
+            <svg
+              class="size-4"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M3.78552 9.5 12.7855 14l9-4.5-9-4.5-8.99998 4.5Zm0 0V17m3-6v6.2222c0 .3483 2 1.7778 5.99998 1.7778 4 0 6-1.3738 6-1.7778V11"
+              />
+            </svg>
+            <span>{{course.info.instructor}}</span>
+          </li>
+        </ul>
+      </div>
+
+      <a
+        href="{% url 'course_lessons' %}"
+        class="inline-flex items-center text-white bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
+      >
+        <span>Keep Learning</span>
+        <svg
+          class="w-4 h-4 ms-1.5 rtl:rotate-180 -me-0.5"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M19 12H5m14 0-4 4m4-4-4-4"
+          /></svg
+      ></a>
+    </div>
+  </div>
+</main>
+{% endblock content %}
